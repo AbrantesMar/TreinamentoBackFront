@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiAula.Models
 {
@@ -8,7 +9,9 @@ namespace ApiAula.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(name: "Id")]
         public int Id { get; set; }
-        
+
+        [Required]
+        [StringLength(50)]
         [Column(name: "Nome")]
         public string Nome { get; set; }
         
