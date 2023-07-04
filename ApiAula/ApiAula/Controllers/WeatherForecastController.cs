@@ -1,3 +1,5 @@
+using ApiAula.Data;
+using ApiAula.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiAula.Controllers
@@ -12,10 +14,13 @@ namespace ApiAula.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private ContextDB contextDB;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,
+            ContextDB contextDB)
         {
             _logger = logger;
+            this.contextDB = contextDB;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -28,6 +33,22 @@ namespace ApiAula.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpPost(Name = "Test")]
+        public string Post()
+        {
+            string retorno = "";
+            Professor p = new Professor
+            {
+                Cpf = "123",
+                Nome = "Marcio",
+                Titulacao = "MCP"
+            };
+            this.contextDB.Professor.Add(p);
+            this.contextDB.SaveChanges();
+            retorno = "Professor cadastrado com sucesso";
+            return retorno;
         }
     }
 }
